@@ -3,6 +3,7 @@ This program controls Banana Pi M2 Zero GPIO over TCP connection from "robot-ser
 C language version
 
 # Dependencies
+- apt install libgpiod-dev
 - apt install build-essentials
 - apt install libwebsockets-dev
 
