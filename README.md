@@ -1,5 +1,5 @@
 # robot-server-c overview
-This program controls Banana Pi M2 Zero GPIO over TCP connection from "robot-server-gui" app 
+This program controls Banana Pi M2 Zero GPIO over TCP connection from "robot-control-gui" app 
 C language version
 
 # Dependencies
