@@ -36,20 +36,28 @@ void r_init(void){
    }
 
    ret = gpiod_line_request_output(line_20, CONSUMER, 0);
-   if(!ret){
-      perror("Output request");
+   if(ret == 0){
+      printf("GPIO pin 20 is operational\n");
+   } else {
+      printf("Failed to initialize GPIO pin 20\n");
    }
    ret = gpiod_line_request_output(line_21, CONSUMER, 0);
-   if(!ret){
-      perror("Output request");
+   if(ret == 0){
+      printf("GPIO pin 21 is operational\n");
+   } else {
+      printf("Failed to initialize GPIO pin 21\n");
    }
    ret = gpiod_line_request_output(line_10, CONSUMER, 0);
-   if(!ret){
-      perror("Output request");
+   if(ret == 0){
+      printf("GPIO pin 10 is operational\n");
+   } else {
+      printf("Failed to initialize GPIO pin 10\n");
    }
    ret = gpiod_line_request_output(line_17, CONSUMER, 0);
-   if(!ret){
-      perror("Output request");
+   if(ret == 0){
+      printf("GPIO pin 17 is operational\n");
+   } else {
+      printf("Failed to initialize GPIO pin 17\n");
    }
 }
 

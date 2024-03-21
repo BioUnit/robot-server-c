@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>       //sleep(), read(), write(), close()
-#include "mygpio.h"       //custom GPIO controls
 #include "myvideo.h"      //video stream
+#include "mygpio.h"       //custom GPIO controls
 
 
 int main(int argc, char** argv){
@@ -91,7 +91,6 @@ int main(int argc, char** argv){
          r_stop();
          memset(&buff, 0, 20);
       }
-
    }
    close(sockfd);
    return 0;
