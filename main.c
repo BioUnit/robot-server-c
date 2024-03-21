@@ -63,8 +63,13 @@ int main(int argc, char** argv){
 
    /* Simple TCP parser */
    while(1){
-      read(connfd, buff, sizeof(buff));
-      //printf("Client: %s\r\n", buff);
+      if(read(connfd, buff, sizeof(buff)) == 0){
+         printf("Client has closed the connection.\n");
+         r_stop();
+         close(sockfd);
+         exit(0);
+      }
+
       if((buff[0] == 'L') && (buff[1]=='P')){
          r_move_left();
          memset(&buff, 0, 20);
@@ -72,19 +77,20 @@ int main(int argc, char** argv){
       if((buff[0] == 'R') && (buff[1]=='P')){
          r_move_right();
          memset(&buff, 0, 20);
-      } 
+      }
       if((buff[0] == 'F') && (buff[1]=='P')){
          r_move_forward();
          memset(&buff, 0, 20);
-      } 
+      }
       if((buff[0] == 'B') && (buff[1]=='P')){
          r_move_backward();
          memset(&buff, 0, 20);
-      } 
+      }
       if((buff[0] == 'R') && (buff[1]=='R')){
          r_stop();
          memset(&buff, 0, 20);
       }
+
    }
    close(sockfd);
    return 0;
