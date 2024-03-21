@@ -1,10 +1,12 @@
-#include <sys/socket.h>   //sockfd
+#include <sys/socket.h>   //socket()
 #include <netinet/in.h>   //sockaddr
-#include <netinet/ip.h>   //INADDR_ZNY
+#include <netinet/ip.h>   //INADDR_ANY
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>       //sleep(), read(), write(), close()
-#include "mygpio.h"
+#include "mygpio.h"       //custom GPIO controls
+#include "myvideo.h"      //video stream
+
 
 int main(int argc, char** argv){
    int sockfd, connfd, len;
@@ -16,8 +18,10 @@ int main(int argc, char** argv){
    };
    struct sockaddr_in client;
 
+   /* Initialize GPIO for robot */
    r_init();
 
+   /* Socket initialization */
    sockfd = socket(AF_INET, SOCK_STREAM, 0);
    if(sockfd == -1){
       printf("Socket creation FAILED\r\n");
@@ -50,6 +54,14 @@ int main(int argc, char** argv){
       printf("Server accepted the client\r\n");
    }
 
+   /* Video stream initialization */
+   if(create_video_pipeline() == -1){
+      printf("Pipeline creation failed!\n");
+   } else {
+      start_video_pipeline();
+   }
+
+   /* Simple TCP parser */
    while(1){
       read(connfd, buff, sizeof(buff));
       //printf("Client: %s\r\n", buff);
@@ -77,5 +89,3 @@ int main(int argc, char** argv){
    close(sockfd);
    return 0;
 }
-
-
