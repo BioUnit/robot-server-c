@@ -1,6 +1,5 @@
 #include "mygpio.h"
 #include <gpiod.h>
-#include <stdio.h>
 
 #define CONSUMER "bio_unit_gpio"
 
@@ -52,6 +51,14 @@ void r_init(void){
    if(!ret){
       perror("Output request");
    }
+}
+
+void r_close(void){
+   gpiod_line_release(line_20);
+   gpiod_line_release(line_21);
+   gpiod_line_release(line_10);
+   gpiod_line_release(line_17);
+   gpiod_chip_close(chip);
 }
 
 void r_move_left(void){

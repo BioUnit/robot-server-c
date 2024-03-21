@@ -66,6 +66,7 @@ int main(int argc, char** argv){
       if(read(connfd, buff, sizeof(buff)) == 0){
          printf("Client has closed the connection.\n");
          r_stop();
+         r_close();
          close(sockfd);
          exit(0);
       }
