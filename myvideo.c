@@ -13,9 +13,11 @@ GstCaps *caps;
 
 
 int create_video_pipeline(void){
+   /* Initializer Gstreamer and a new pipeline */
    gst_init(NULL, NULL);
    pipeline = gst_pipeline_new("pipeline");
 
+   /* Create element for retrieving video from camera */
    src = gst_element_factory_make("v4l2src", "autovideosrc");
    if(!src){
       g_printerr("Failed to create src\r\n");
@@ -25,6 +27,7 @@ int create_video_pipeline(void){
    }
    g_object_set(src, "device", "/dev/video1", NULL);
 
+   /* Create element for video converting */
    videoconvert = gst_element_factory_make("videoconvert", "videoconvert");
    if(!videoconvert){
       g_printerr("Failed to create videoconvert\n");
@@ -33,6 +36,7 @@ int create_video_pipeline(void){
       g_print("Videoconvert: OK\n");
    }
 
+   /* Create element for specifing convertion format */
    capsfilter = gst_element_factory_make("capsfilter", "capsfilter");
    if(!capsfilter){
       g_printerr("Failed to create capsfilter\n");
@@ -44,6 +48,7 @@ int create_video_pipeline(void){
    g_object_set(capsfilter, "caps", caps, NULL);
    gst_caps_unref(caps);
 
+   /* Create element for video stream encoding */
    encoder = gst_element_factory_make("x264enc", "my_encoder");
    if(!encoder){
       g_printerr("Failed to create encoder\n");
@@ -51,8 +56,9 @@ int create_video_pipeline(void){
    } else {
       g_print("Encoder: OK\n");
    }
-   g_object_set(encoder, "bitrate", 2000, "speed-preset", ULTRAFAST, "tune", ZEROLATENCY,"threads", 2, "noise-reduction", 3,  NULL);
+   g_object_set(encoder, "bitrate", 2000, "speed-preset", ULTRAFAST, "tune", ZEROLATENCY, "threads", 2, "noise-reduction", 3,  NULL);
 
+   /* Create element for UDP video streaming */
    sink = gst_element_factory_make("udpsink", "udpsink");
    if(!sink){
       g_printerr("Failed to create sink\n");
@@ -66,9 +72,11 @@ int create_video_pipeline(void){
 }
 
 void start_video_pipeline(void){
+   /* Add elements to the pipeline */
    gst_bin_add_many(GST_BIN(pipeline), src, videoconvert, capsfilter, encoder, sink, NULL);
    gst_element_link_many(src, videoconvert, capsfilter, encoder, sink, NULL);
 
+   /* Start pipeline */
    gst_element_set_state(pipeline, GST_STATE_PLAYING);
    g_print("Pipeline playing\n");
 }
