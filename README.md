@@ -20,3 +20,10 @@ gcc main.c mygpio.c -lgpiod
 
 # how to run
 sudo ./a.out
+
+# Youtube tutorial commits bindings
+To be able to see exact source code please use : 
+- git checkout COMMIT_NUMBER_YOU_NEED
+
+Youtube tutorials bindings:
+- How to use GPIO in C and C++ applications on Banana Pi (Armbian) -> git checkout 620e84c3704600dc5b8176e9ec309ccb411e6f98
