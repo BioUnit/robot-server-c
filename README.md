@@ -4,7 +4,7 @@ C language version
 
 # How to use
 - clone repo
-- change IP address in "myvideo"
+- change IP address in "myvideo.c"
 - compile
 - run "robot-server-c"
 - change IP address in "robot-control-gui" sources (see README at "robot-control-gui")
